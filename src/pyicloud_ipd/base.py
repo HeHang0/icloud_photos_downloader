@@ -391,12 +391,16 @@ class PyiCloudService:
         except PyiCloudAPIResponseException as error:
             msg = "Invalid authentication token."
             raise PyiCloudFailedLoginException(msg, error) from error
-
+        try:
+            json_f = json.dumps(self.data, sort_keys=True, indent=4, separators=(',', ':'))
+            print(json_f)
+        except:
+            pass
         # {'domainToUse': 'iCloud.com'}
-        domain_to_use = self.data.get('domainToUse')
-        if domain_to_use != None:
-            msg = f'Apple insists on using {domain_to_use} for your request. Please use --domain parameter'
-            raise PyiCloudConnectionException(msg)
+        # domain_to_use = self.data.get('domainToUse')
+        # if domain_to_use != None:
+        #     msg = f'Apple insists on using {domain_to_use} for your request. Please use --domain parameter'
+        #     raise PyiCloudConnectionException(msg)
 
     def _authenticate_with_credentials_service(self, service):
         """Authenticate to a specific service using credentials."""
